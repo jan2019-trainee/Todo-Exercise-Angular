@@ -1,0 +1,139 @@
+<body class="fontface font-size-24">
+  <div class="bg-color-gray">
+    <span>User List</span>
+  </div>
+  <div class="txt-align-right">
+    <input
+      type="text"
+      placeholder="Search.."
+      [(ngModel)]="searchText"
+      (change)="onSearch()"
+    />
+    <a href="./index.html"
+      ><button class="btn btn-primary">View Todos</button></a
+    >
+    <a href="./user-create.html"
+      ><button class="btn btn-success ">Create User</button></a
+    >
+  </div>
+  <div class="font-size-16">
+    <span *ngIf="filteredData.length == 0">NO RESULT</span>
+    <table
+      class="table border-1 txt-align-center"
+      id="users-table"
+      *ngIf="filteredData.length > 1"
+    >
+      <thead>
+        <tr class="txt-align-center border-1 bg-gray">
+          <th>ID</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Occupation</th>
+          <!-- <th>No. of Todos</th> -->
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of filteredData">
+          <td>{{ user.id }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.occupation }}</td>
+          <!-- <td>1</td> -->
+          <td>
+            <a href="/HTML/user-update.html"
+              ><button class="btn btn-update" (click)="onUpdate(user)">
+                Update
+              </button></a
+            >
+            <a href="/HTML/delete-confirmation.html"
+              ><button class="btn btn-delete" (click)="onDelete(user)">
+                Delete
+              </button></a
+            >
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr class="bg-gray">
+          <td colspan="6">
+            <div>
+              <button>Prev</button> Page 1/2
+              <button>Next</button>
+            </div>
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+    <!-- <table class="table border-1 txt-align-center">
+            <thead>
+              <tr class="txt-align-center border-1 bg-gray">
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Occupation</th>
+                <th>No. of Todos</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+      
+            <tbody class="border-1">
+              <tr>
+                <td>1</td>
+                <td>Cao</td>
+                <td>Cao</td>
+                <td>General</td>
+                <td>1</td>
+                          <td>
+                  <a href="/HTML/user-update.html"><button class="btn btn-update">Update</button></a>
+                  <a href="/HTML/delete-confirmation.html"><button class="btn btn-delete">Delete</button></a>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Scipio</td>
+                <td>Afrinicus</td>
+                <td>Soldier</td>
+                <td>1</td>
+                          <td>
+                  <a href="/HTML/user-update.html"><button class="btn btn-update">Update</button></a>
+                  <a href="/HTML/delete-confirmation.html"><button class="btn btn-delete">Delete</button></a>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>Charles</td>
+                <td>Martel</td>
+                <td>Laborer</td>
+                <td>1</td>
+                          <td>
+                  <a href="/HTML/user-update.html"><button class="btn btn-update">Update</button></a>
+                  <a href="/HTML/delete-confirmation.html"><button class="btn btn-delete">Delete</button></a>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Minamoto</td>
+                <td>Yaiba</td>
+                <td>Shugon</td>
+                <td>2</td>
+                          <td>
+                  <a href="/HTML/user-update.html"><button class="btn btn-update">Update</button></a>
+                  <a href="/HTML/delete-confirmation.html"><button class="btn btn-delete">Delete</button></a>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Alexander</td>
+                <td>I</td>
+                <td>Slave</td>
+                <td>1</td>
+                          <td>
+                  <a href="/HTML/user-update.html"><button class="btn btn-update">Update</button></a>
+                  <a href="/HTML/delete-confirmation.html"><button class="btn btn-delete">Delete</button></a>
+                </td>
+              </tr>
+            </tbody>
+          </table> -->
+  </div>
+</body>

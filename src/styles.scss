@@ -1,0 +1,83 @@
+/* You can add global styles to this file, and also import other style files */
+.fontface {
+    font-size: 1.6rem;
+    font-family: "Proxima Nova Soft", "Helvetica Neue", sans-serif;
+    line-height: 1.618;
+    /* word-wrap: break-word; */
+    color: #3a3838;
+  }
+  
+  .font-size-16 {
+    font-size: 16px;
+  }
+  
+  .font-size-24 {
+    font-size: 24px;
+  }
+  
+  .txt-align-right {
+    text-align: right;
+  }
+  
+  .btn-update {
+    background-color: #fdc02e;
+    color: #000000;
+  }
+  .btn-delete {
+    background-color: #d93749;
+    color: #ffffff;
+  }
+  
+  .btn-primary {
+    background-color: #157ffb;
+    color: white;
+  }
+  
+  .btn-success {
+    background-color: #30a54a;
+    color: white;
+  }
+  
+  .btn {
+    border-radius: 4px;
+    border: none;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  input {
+    padding: 8px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  .bg-color-gray {
+    background-color: #dddddd;
+  }
+  .table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    
+  }
+  
+  .bg-gray {
+    background-color: #dddddd;
+  }
+  
+  .txt-align-center {
+    text-align: center;
+  }
+  
+  td,
+  th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+    border-left: none;
+    border-right: none;
+  }
+  
