@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TodoComponent } from './todo.component';
+import { UsersCreateComponent } from './users-create.component';
 
 
 
 @NgModule({
-  declarations: [TodoComponent],
+  declarations: [UsersCreateComponent],
   imports: [
     CommonModule
   ]
 })
-export class TodoModule { }
+export class UsersCreateModule { }
