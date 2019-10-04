@@ -27,7 +27,7 @@
             <th scope="col">Description</th>
             <th scope="col">Status</th>
             <th scope="col">Owner</th>
-            <th scope="col">Status</th>
+            <th scope="col">Action</th>
           </tr>
         </thead>
 
@@ -38,7 +38,7 @@
             <td>{{ todo.description }}</td>
             <td>{{ todo.status }}</td>
             <td>
-              <a routerLink="/user-details.html">{{ todo.owner }}</a>
+              <a routerLink="/users-details">{{ todo.owner }}</a>
             </td>
             <td>
               <a routerLink="/todo-update.html"
@@ -63,4 +63,19 @@
       </table>
     </div>
   </div>
-</body>
+<!-- </body>
+1. lazy loaded modules (todo and user module)
+2. use modal and toast(you can use ngbootstrap)
+3. have the following routing
+..Todo 
+....todo <--- todo List (Pagination and search shoud be passed on query params)
+....todo Create UPDATE DELETE must be with modals
+..Users
+....Users <--- user List
+....Users Create UPDATE DELETE must be with modals
+4. when display a todo/user create a child component (@Input and @Output)
+ ex. 
+5. Create a TodoService and UserService <---- Data Should be (can an ARRAY)
+  implement CRUD + Search + Pagination
+6. Show Toast in every success operation
+ -->

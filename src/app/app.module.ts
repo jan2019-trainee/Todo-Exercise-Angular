@@ -6,23 +6,33 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { UsersModule } from './users/users.module';
 import { TodoModule } from './todos/todo.module';
-import { UsersCreateModule } from './users-create/users-create.module';
 import { TodosCreateModule } from './todos-create/todos-create.module';
+import { UsersDetailsModule } from './users-details/users-details.module';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ToastComponent } from './toast/toast.component';
+import { UserUpdateComponent } from './users/user-update/user-update.component';
+import { UserDeleteComponent } from './users/user-delete/user-delete.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ToastComponent,
   ],
   imports: [
     BrowserModule,
     FormsModule,
     AppRoutingModule,
     UsersModule,
-    UsersCreateModule,
+    UsersDetailsModule,
     TodoModule,
-    TodosCreateModule
+    TodosCreateModule,
+    NgbModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[
+    UserUpdateComponent,
+    UserDeleteComponent
+  ]
 })
 export class AppModule { }

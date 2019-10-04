@@ -1,4 +1,5 @@
-import { Component } from "@angular/core";
+import { Component, TemplateRef } from "@angular/core";
+import { ToastService } from './service/toast.service';
 
 @Component({
   selector: "app-root",
@@ -6,7 +7,11 @@ import { Component } from "@angular/core";
   styleUrls: ["./app.component.scss"]
 })
 export class AppComponent {
+  
   title = "my-app";
 
- 
+   constructor(public toastService: ToastService) {}
+   
+
+  
 }

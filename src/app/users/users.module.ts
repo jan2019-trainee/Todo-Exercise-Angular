@@ -3,15 +3,21 @@ import { CommonModule } from '@angular/common';
 import { UsersComponent } from './users.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserUpdateComponent } from './user-update/user-update.component';
+import { UserDeleteComponent } from './user-delete/user-delete.component';
+import { UsersRoutingModule } from './users.routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 
 @NgModule({
-  declarations: [UsersComponent],
+  declarations: [UsersComponent, UserUpdateComponent,  UserDeleteComponent ],
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    UsersRoutingModule,
+    NgbModule
   ]
 })
 export class UsersModule { }
