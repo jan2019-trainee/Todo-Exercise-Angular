@@ -1,23 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UsersComponent } from './users.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserUpdateComponent } from './user-update/user-update.component';
-import { UserDeleteComponent } from './user-delete/user-delete.component';
+
 import { UsersRoutingModule } from './users.routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { UsersDeleteModalFormComponent } from './users-delete-modal-form/users-delete-modal-form.component';
 
 
 
 @NgModule({
-  declarations: [UsersComponent, UserUpdateComponent,  UserDeleteComponent ],
+  declarations: [UsersComponent, UserUpdateComponent ],
   imports: [
     CommonModule,
     FormsModule,
     RouterModule,
     UsersRoutingModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ]
 })
 export class UsersModule { }

@@ -13,13 +13,16 @@
       <a routerLink="/users" class="mx-2">
         <button class="btn btn-primary">View Users</button>
       </a>
-      <a routerLink="/todos-create">
-        <button class="btn btn-success ">Create Todo</button>
-      </a>
+      <button class="btn btn-success" (click)="openCreateModal()">
+        Create Todo
+      </button>
     </div>
     <div class="table-responsive-sm">
       <span *ngIf="filteredTodo.length == 0">NO RESULT</span>
-      <table  class="table table-striped table-hover table-sm " *ngIf="filteredTodo.length > 0">
+      <table
+        class="table table-striped table-hover table-sm "
+        *ngIf="filteredTodo.length > 0"
+      >
         <thead>
           <tr class="txt-align-center border-1 bg-gray">
             <th scope="col">ID</th>
@@ -31,7 +34,7 @@
           </tr>
         </thead>
 
-        <tbody >
+        <tbody>
           <tr *ngFor="let todo of filteredTodo">
             <td scope="row">{{ todo.id }}</td>
             <td>{{ todo.name }}</td>
@@ -41,12 +44,14 @@
               <a routerLink="/users-details">{{ todo.owner }}</a>
             </td>
             <td>
-              <a routerLink="/todo-update.html"
-                ><button class="btn btn-warning">Update</button></a
+              <button class="btn btn-warning" (click)="openUpdateModal(todo)">
+                Update</button
+              ><button
+                class="btn btn-danger mx-2"
+                (click)="openDeleteModal(todo)"
               >
-              <a routerLink="/delete-confirmation.html" class="mx-2"
-                ><button class="btn btn-danger">Delete</button></a
-              >
+                Delete
+              </button>
             </td>
           </tr>
         </tbody>
@@ -63,7 +68,7 @@
       </table>
     </div>
   </div>
-<!-- </body>
+  <!-- </body>
 1. lazy loaded modules (todo and user module)
 2. use modal and toast(you can use ngbootstrap)
 3. have the following routing
@@ -79,3 +84,4 @@
   implement CRUD + Search + Pagination
 6. Show Toast in every success operation
  -->
+</body>

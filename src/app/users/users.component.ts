@@ -2,10 +2,10 @@ import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "../service/toast.service";
 import { UserUpdateComponent } from './user-update/user-update.component';
-import { UserDeleteComponent } from './user-delete/user-delete.component';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { UsersService } from './users.service';
-import { Users } from './models/users';
+import { UsersDeleteModalFormComponent } from './users-delete-modal-form/users-delete-modal-form.component';
+import { UsersCreateModalFormComponent } from './users-create-modal-form/users-create-modal-form.component';
 @Component({
   selector: "app-users",
   templateUrl: "./users.component.html",
@@ -35,13 +35,13 @@ export class UsersComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getHeroes();
+    this.getUsers();
     this.router.navigate(['/users'],{queryParams:  { page: this.page }});
     this.page = this.activatedRoute.snapshot.queryParamMap.get("page");
      
   }
 
-  getHeroes(){
+  getUsers(){
     this.userData = this.usersService.getUserData();
     this.filteredData = this.userData;
     console.log(this.usersService.getUserData());
@@ -64,11 +64,26 @@ export class UsersComponent implements OnInit {
   }
 
   
+  openDeleteModal(user) {
+    const modalRef = this.modalService.open(UsersDeleteModalFormComponent, { size: "sm" });
+     modalRef.componentInstance.user = user;
 
-  onDelete() {}
+    modalRef.result
+      .then(result => {
+        console.log(result);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+       console.log(user);
+  }
+
+  onDelete() {
+    
+  }
 
   openUpdateModal(user) {
-    
     
     const modalRef = this.modalService.open(UserUpdateComponent, { size: "lg" });
      modalRef.componentInstance.user = user; // should be the object
@@ -80,17 +95,14 @@ export class UsersComponent implements OnInit {
       .catch(error => {
         console.log(error);
       });
-
-
-      
   }
   onUpdate(user) {}
 
-  openDeleteModal(user) {
-    const modalDeleteRef = this.modalService.open(UserDeleteComponent, { size: "sm" });
-    modalDeleteRef.componentInstance.user = user;
-
-    modalDeleteRef.result
+  openCreateModal(){
+    
+    const modalRef = this.modalService.open(UsersCreateModalFormComponent, { size: "lg" });
+     
+    modalRef.result
       .then(result => {
         console.log(result);
       })
@@ -103,4 +115,5 @@ export class UsersComponent implements OnInit {
     this.router.navigate(['/users'],{queryParams:  { page: event }});
     this.page = event;
 }
+
 }

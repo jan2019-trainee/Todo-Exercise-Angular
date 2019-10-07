@@ -1,0 +1,89 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ modalTitle }}</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form action="/todos-create-modal-form">
+      <div class="container">
+        <div class="form-group">
+          <label for="Id">ID</label>
+          <input
+            class="form-control"
+            type="text"
+            name="Id"
+            id="Id"
+            placeholder="Enter ID..."
+            [(ngModel)]="todo.id"
+            [ngModelOptions]="{standalone: true}"
+          />
+        </div>
+  
+        <div class="form-group">
+          <label for="Name">Name</label>
+          <input
+            class="form-control"
+            type="text"
+            name="Name"
+            id="Name"
+            placeholder="Enter Name..."
+            [(ngModel)]="todo.name"
+            [ngModelOptions]="{standalone: true}"
+          />
+        </div>
+        <div class="form-group">
+          <label for="Description">Description</label>
+          <textarea
+            class="form-control"
+            id="Description"
+            rows="2"
+            cols="3"
+            placeholder="Enter Description..."
+            [(ngModel)]="todo.description"
+            [ngModelOptions]="{standalone: true}"
+          ></textarea>
+        </div>
+        <div class="form-group">
+          <label for="Status">Status</label>
+          <select class="form-control" id="status"  [(ngModel)]="todo.status" >
+            <option>on progress</option>
+            <option>finished</option>
+            <option>unfinished</option>
+          </select>
+        </div>
+        <div>
+          <label for="Owner ID">Owner ID</label>
+          <input
+            class="form-control"
+            type="text"
+            name="Owner"
+            id="Owner"
+            placeholder="Enter Owner Id..."
+            [(ngModel)]="todo.owner"
+            [ngModelOptions]="{standalone: true}"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <div class="container d-flex justify-content-between">
+      <button class="btn btn-primary" (click)="showError()">
+        Update Todo
+      </button>
+      <button
+        type="button"
+        class="btn btn-outline-dark"
+        (click)="activeModal.dismiss('Close clicked')"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+  

@@ -1,26 +1,27 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { ToastService } from "src/app/service/toast.service";
-import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { Component, OnInit } from '@angular/core';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastService } from 'src/app/service/toast.service';
 
 @Component({
-  selector: "app-user-delete",
-  templateUrl: "./user-delete.component.html",
-  styleUrls: ["./user-delete.component.scss"]
+  selector: 'app-users-create-modal-form',
+  templateUrl: './users-create-modal-form.component.html',
+  styleUrls: ['./users-create-modal-form.component.scss']
 })
-export class UserDeleteComponent implements OnInit {
-  modalTitle = "User Delete";
-  @Input() public user;
+export class UsersCreateModalFormComponent implements OnInit {
+ 
+  modalTitle = "User Create";
   constructor(
     public activeModal: NgbActiveModal,
     public toastService: ToastService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    
+  }
 
   closeModal() {
     this.activeModal.close("Modal Closed");
   }
-
 
   showStandard() {
     this.toastService.show("I am a standard toast", {
