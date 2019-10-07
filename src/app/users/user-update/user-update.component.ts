@@ -20,39 +20,44 @@ export class UserUpdateComponent implements OnInit {
   userFirstName: string;
   userLastName: string;
   userOccupation: string;
-  userProfilePicture: string;
+  // userProfilePicture: string;
 
   index;
 
   constructor(
     public activeModal: NgbActiveModal,
     public toastService: ToastService,
-    private usersService: UsersService
-  ) // private formBuilder: FormBuilder
-  {}
+    private usersService: UsersService // private formBuilder: FormBuilder
+  ) {}
 
   onSubmit() {
-    // console.log(this.index);
-    const userData = this.usersService.getUserData();
-     const updateTodo = userData.find(this.findIndexToUpdate, this.user.id);
+ 
+    const params = { 
+      id: this.user.id,
+      firstName : this.userFirstName,
+      lastName : this.userLastName,
+      occupation : this.userOccupation,
+      profilePicture : this.user.profilePicture
+     };
 
-    console.log(this.user.id);
-
-    let index = userData.indexOf(this.index);
-    this.usersService.getUserData()[index] = this.user;
-    this.showSuccess();
-
-    
-  // console.log(this.index);
-  // console.log(this.usersService.getUserData().find(this.findIndexToUpdate,this.user.id));
-
+     const userData = this.usersService.getUserData();
+     let index = userData.indexOf(this.index);
+     this.usersService.updateUserData(index,params)
+     console.log(params);
+     
   }
 
   ngOnInit() {
     this.index = this.usersService
       .getUserData()
       .find(this.findIndexToUpdate, this.user.id);
-    
+
+    this.userId = this.index.id;
+    this.userFirstName = this.index.firstName;
+    this.userLastName = this.index.lastName;
+    this.userOccupation = this.index.occupation;
+
+    console.log(this.index.id);
   }
 
   closeModal() {

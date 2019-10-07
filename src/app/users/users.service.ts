@@ -95,4 +95,8 @@ export class UsersService {
   getUserData(): Users[] {
     return this.userData;
   }
+
+  updateUserData(index:number, user: Users){
+    this.getUserData().splice(index,1,user)
+  }
 }
