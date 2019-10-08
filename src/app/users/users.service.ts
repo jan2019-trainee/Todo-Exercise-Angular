@@ -1,12 +1,10 @@
-import { Injectable } from '@angular/core';
-import { Users } from './models/users';
+import { Injectable } from "@angular/core";
+import { Users } from "./models/users";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class UsersService {
-
-  
   userData = [
     {
       id: "1",
@@ -90,13 +88,26 @@ export class UsersService {
     }
   ];
 
-  constructor() { }
+  constructor() {}
 
+  getUserData1(page: number, pageSize: number): Users[] {
+    --page;
+    return this.userData.slice(page * pageSize, (page + 1) * pageSize);
+  }
   getUserData(): Users[] {
+    
     return this.userData;
   }
 
-  updateUserData(index:number, user: Users){
-    this.getUserData().splice(index,1,user)
+  updateUserData(index: number, user: Users) {
+     this.getUserData().splice(index, 1, user);
+  }
+
+  createUserData(user: Users) {
+     this.getUserData().push(user);
+  }
+
+  deleteUserData(index: number){
+    this.getUserData().splice(index,1);
   }
 }

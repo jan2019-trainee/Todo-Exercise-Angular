@@ -12,58 +12,30 @@ export class UsersDeleteModalFormComponent implements OnInit {
 
   modalTitle = "Delete";
   
-
+index;
   @Input() public user;
    
   constructor(
     public activeModal: NgbActiveModal,
-    public toastService: ToastService,
     private usersService: UsersService
   ) {}
 
   onDelete(){
-    const index = this.usersService.getUserData().indexOf(this.user);
-    if (index !== -1) {
-        this.usersService.getUserData().splice(index, 1);
+    
+    if (this.index !== -1) {
+        this.usersService.deleteUserData(this.index);
     }        
+    this.closeModal();
+
+    
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.index = this.usersService.getUserData().indexOf(this.user);
+  }
 
   closeModal() {
     this.activeModal.close("Modal Closed");
-  }
-
-  showStandard() {
-    this.toastService.show("I am a standard toast", {
-      delay: 2000,
-      autohide: true
-    });
-  }
-
-  showSuccess() {
-    this.toastService.show("I am a success toast", {
-      classname: "bg-success text-light",
-      delay: 5000,
-      autohide: true,
-      headertext: "Toast Header"
-    });
-  }
-  showError() {
-    this.toastService.show("Data Not Saved!", {
-      classname: "bg-danger text-light",
-      delay: 5000,
-      autohide: true,
-      headertext: "Error!!!"
-    });
-  }
-
-  showCustomToast(customTpl) {
-    this.toastService.show(customTpl, {
-      classname: "bg-info text-light",
-      delay: 5000,
-      autohide: true
-    });
   }
 
 }

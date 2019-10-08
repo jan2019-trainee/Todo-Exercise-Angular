@@ -4,6 +4,7 @@ import { TodoComponent } from './todo.component';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { TodoRoutingModule } from './todo.routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { TodoRoutingModule } from './todo.routing.module';
     CommonModule,
     FormsModule,
     RouterModule,
-    TodoRoutingModule
+    TodoRoutingModule,
+    NgbModule
   ]
 })
 export class TodoModule { }

@@ -7,7 +7,6 @@ import { UserUpdateComponent } from './user-update/user-update.component';
 
 import { UsersRoutingModule } from './users.routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { UsersDeleteModalFormComponent } from './users-delete-modal-form/users-delete-modal-form.component';
 
 
 
@@ -19,7 +18,7 @@ import { UsersDeleteModalFormComponent } from './users-delete-modal-form/users-d
     RouterModule,
     UsersRoutingModule,
     NgbModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ]
 })
 export class UsersModule { }

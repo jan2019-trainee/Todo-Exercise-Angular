@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/service/toast.service";
+import { TodoService } from '../todo.service';
 
 @Component({
   selector: "app-todos-create-modal-form",
@@ -9,47 +10,40 @@ import { ToastService } from "src/app/service/toast.service";
 })
 export class TodosCreateModalFormComponent implements OnInit {
   modalTitle = "Todo Create";
+
+  todoId: string;
+  todoName: string;
+  todoDescription: string;
+  todoStatus: string;
+  todoOwner: string;
+  todoOwnerId: string;
+
   constructor(
     public activeModal: NgbActiveModal,
-    public toastService: ToastService
+    private todoService: TodoService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.todoId = Math.max.apply(Math, this.todoService.getTodoData().map(todo => { return todo.id; })) + 1;
+  }
+
+  onSubmit(){
+    const params = { 
+      id: this.todoId,
+      name: this.todoName,
+      description: this.todoDescription,
+      status: this.todoStatus,
+      owner: this.todoOwner,
+      ownerId: null
+     };
+     this.todoService.createTodoData(params);
+     
+    this.activeModal.close();
+  }
 
 
   closeModal() {
     this.activeModal.close("Modal Closed");
   }
 
-  showStandard() {
-    this.toastService.show("I am a standard toast", {
-      delay: 2000,
-      autohide: true
-    });
-  }
-
-  showSuccess() {
-    this.toastService.show("I am a success toast", {
-      classname: "bg-success text-light",
-      delay: 5000,
-      autohide: true,
-      headertext: "Toast Header"
-    });
-  }
-  showError() {
-    this.toastService.show("Data Not Saved!", {
-      classname: "bg-danger text-light",
-      delay: 5000,
-      autohide: true,
-      headertext: "Error!!!"
-    });
-  }
-
-  showCustomToast(customTpl) {
-    this.toastService.show(customTpl, {
-      classname: "bg-info text-light",
-      delay: 5000,
-      autohide: true
-    });
-  }
 }

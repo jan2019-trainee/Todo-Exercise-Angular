@@ -59,8 +59,13 @@
           <tr>
             <td colspan="6">
               <div>
-                <button class="btn btn-info">Prev</button> Page 1/2
-                <button class="btn btn-info">Next</button>
+                <ngb-pagination
+                  [(page)]="currentPage"
+                  [pageSize]="itemsPerPage"
+                  [collectionSize]="totalItems"
+                  aria-label="Default pagination"
+                  (pageChange)="pageChanged($event)"
+                ></ngb-pagination>
               </div>
             </td>
           </tr>
@@ -68,20 +73,4 @@
       </table>
     </div>
   </div>
-  <!-- </body>
-1. lazy loaded modules (todo and user module)
-2. use modal and toast(you can use ngbootstrap)
-3. have the following routing
-..Todo 
-....todo <--- todo List (Pagination and search shoud be passed on query params)
-....todo Create UPDATE DELETE must be with modals
-..Users
-....Users <--- user List
-....Users Create UPDATE DELETE must be with modals
-4. when display a todo/user create a child component (@Input and @Output)
- ex. 
-5. Create a TodoService and UserService <---- Data Should be (can an ARRAY)
-  implement CRUD + Search + Pagination
-6. Show Toast in every success operation
- -->
 </body>

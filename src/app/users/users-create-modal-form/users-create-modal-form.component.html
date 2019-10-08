@@ -1,81 +1,87 @@
-<div class="modal-header">
-    <h4 class="modal-title">{{ modalTitle }}</h4>
-    <button
-      type="button"
-      class="close"
-      aria-label="Close"
-      (click)="activeModal.dismiss('Cross click')"
-    >
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form action="/users-create">
-      <div class="container">
-        <div class="form-group">
-          <label for="Id">ID</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Id"
-            id="Id"
-            placeholder="Enter ID..."
-          />
-        </div>
-  
-        <div class="form-group">
-          <label for="First Name">First Name</label>
-          <input
-            class="form-control"
-            type="text"
-            name="FirstName"
-            id="FirstName"
-            placeholder="Enter First name..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="LastName">Last Name</label>
-          <input
-            class="form-control"
-            type="text"
-            name="LastName"
-            id="LastName"
-            placeholder="Enter Last name..."
-          />
-        </div>
-        <div class="form-group">
-          <label for="Occupation">Occupation</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Occupation"
-            id="Occupation"
-            placeholder="Enter Occupation..."
-          />
-        </div>
-        <div>
-          <label for="Profile Picture">Profile Picture</label>
-          <input
-            class="form-control-file"
-            type="file"
-            name="ProfilePicture"
-            id="ProfilePicture"
-          />
-        </div>
-      </div>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <div class="container d-flex justify-content-between">
-      <button class="btn btn-primary"
-      (click)="showError()">Create new User</button>
+<form (ngSubmit)="onSubmit()">
+  <div class="modal-header">
+      <h4 class="modal-title">{{ modalTitle }}</h4>
       <button
         type="button"
-        class="btn btn-outline-dark"
-        (click)="activeModal.dismiss('Close clicked')"
+        class="close"
+        aria-label="Close"
+        (click)="activeModal.dismiss('Cross click')"
       >
-        Close
+        <span aria-hidden="true">&times;</span>
       </button>
     </div>
-  </div>
-  
+    <div class="modal-body">
+      <form action="/users-create">
+        <div class="container">
+          <div class="form-group">
+            <label for="Id">ID</label>
+            <input
+              class="form-control"
+              type="text"
+              name="Id"
+              id="Id"
+              placeholder="Enter ID..."
+              [(ngModel)]="userId"
+              readonly
+            />
+          </div>
+    
+          <div class="form-group">
+            <label for="First Name">First Name</label>
+            <input
+              class="form-control"
+              type="text"
+              name="FirstName"
+              id="FirstName"
+              placeholder="Enter First name..."
+              [(ngModel)]="userFirstName"
+            />
+          </div>
+          <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <input
+              class="form-control"
+              type="text"
+              name="LastName"
+              id="LastName"
+              placeholder="Enter Last name..."
+              [(ngModel)]="userLastName"
+            />
+          </div>
+          <div class="form-group">
+            <label for="Occupation">Occupation</label>
+            <input
+              class="form-control"
+              type="text"
+              name="Occupation"
+              id="Occupation"
+              placeholder="Enter Occupation..."
+              [(ngModel)]="userOccupation"
+            />
+          </div>
+          <div>
+            <label for="Profile Picture">Profile Picture</label>
+            <input
+              class="form-control-file"
+              type="file"
+              name="ProfilePicture"
+              id="ProfilePicture"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <div class="container d-flex justify-content-between">
+        <button class="btn btn-primary"
+        type="submit">Create new User</button>
+        <button
+          type="button"
+          class="btn btn-outline-dark"
+          (click)="activeModal.dismiss('Close clicked')"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </form>
