@@ -1,12 +1,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http'; 
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app.routing.module';
 import { UsersModule } from './users/users.module';
 import { TodoModule } from './todos/todo.module';
-import { TodosCreateModule } from './todos-create/todos-create.module';
 import { UsersDetailsModule } from './users-details/users-details.module';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { ToastComponent } from './toast/toast.component';
@@ -34,8 +34,8 @@ import { UsersDeleteModalFormComponent } from './users/users-delete-modal-form/u
     UsersModule,
     UsersDetailsModule,
     TodoModule,
-    TodosCreateModule,
-    NgbModule
+    NgbModule,
+    HttpClientModule
     
   ],
   providers: [],

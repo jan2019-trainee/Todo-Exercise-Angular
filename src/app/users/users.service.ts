@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Users } from "./models/users";
 
+
 @Injectable({
   providedIn: "root"
 })
@@ -110,4 +111,7 @@ export class UsersService {
   deleteUserData(index: number){
     this.getUserData().splice(index,1);
   }
+  // ----------------
+
+  
 }

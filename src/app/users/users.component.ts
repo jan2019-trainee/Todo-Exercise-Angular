@@ -7,12 +7,15 @@ import { UsersService } from "./users.service";
 import { UsersDeleteModalFormComponent } from "./users-delete-modal-form/users-delete-modal-form.component";
 import { UsersCreateModalFormComponent } from "./users-create-modal-form/users-create-modal-form.component";
 
+
 @Component({
   selector: "app-users",
   templateUrl: "./users.component.html",
   styleUrls: ["./users.component.scss"]
 })
 export class UsersComponent implements OnInit {
+  
+
   userData: any[];
   filteredData: any[];
   itemsPerPage: number = 10;
@@ -26,7 +29,9 @@ export class UsersComponent implements OnInit {
     public toastService: ToastService,
     public activatedRoute: ActivatedRoute,
     public router: Router
-  ) {}
+  ) {
+    
+  }
 
   ngOnInit() {
     this.getUsers();
@@ -57,9 +62,24 @@ export class UsersComponent implements OnInit {
       this.currentPage,
       this.itemsPerPage
     );
-    this.filteredData = this.userData;
+    // this.filteredData = this.userData;
+    
     this.totalItems = this.usersService.getUserData().length;
   }
+
+  // getUserObs(){
+  //   this.usersService.getUserObs().subscribe(response => {
+  //     this.filteredData = response.map(item => {
+  //       return(
+  //         item.id,
+  //         item.firstName,
+  //         item.lastName,
+  //         item.occupation,
+  //         item.profilePicture
+  //       );
+  //     });
+  //   });
+  // }
 
   onSearch() {
     this.router.navigate(["/users"], {
