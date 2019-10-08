@@ -62,7 +62,7 @@ export class UsersComponent implements OnInit {
       this.currentPage,
       this.itemsPerPage
     );
-    // this.filteredData = this.userData;
+     this.filteredData = this.userData;
     
     this.totalItems = this.usersService.getUserData().length;
   }

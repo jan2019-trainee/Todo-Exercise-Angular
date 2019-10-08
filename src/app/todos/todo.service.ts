@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Todos } from './models/todos';
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
 
-  constructor() { }
-
+  constructor(private http: HttpClient) { }
+  API_URL = environment.apiUrl;
 
   todoData = [
     {
@@ -119,5 +122,30 @@ export class TodoService {
   }
   deleteTodoData(index:number){
     this.getTodoData().splice(index, 1);
+  }
+
+  // API: GET /todos
+  public getAllTodos(page: number, pageSize: number): Observable<Todos[]> {
+    return this.http.get<Todos[]>(`$(this.API_URL) $(/todos)`);
+  }
+
+  // API: POST /todos
+  public createTodo(todo: Todos) {
+    // will use this.http.post()
+  }
+
+  // API: GET /todos/:id
+  public getTodoById(todoId: number) {
+    // will use this.http.get()
+  }
+
+  // API: PUT /todos/:id
+  public updateTodo(todo: Todos) {
+    // will use this.http.put()
+  }
+
+  // DELETE /todos/:id
+  public deleteTodoById(todoId: number) {
+    // will use this.http.delete()
   }
 }
