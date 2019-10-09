@@ -12,7 +12,6 @@ export class UsersDeleteModalFormComponent implements OnInit {
 
   modalTitle = "Delete";
   
-index;
   @Input() public user;
    
   constructor(
@@ -22,20 +21,11 @@ index;
 
   onDelete(){
     
-    if (this.index !== -1) {
-        this.usersService.deleteUserData(this.index);
-    }        
-    this.closeModal();
-
-    
+    this.activeModal.close(this.user);
   }
 
   ngOnInit() {
-    this.index = this.usersService.getUserData().indexOf(this.user);
-  }
-
-  closeModal() {
-    this.activeModal.close("Modal Closed");
+    
   }
 
 }

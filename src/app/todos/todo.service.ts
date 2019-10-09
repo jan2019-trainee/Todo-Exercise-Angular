@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Todos } from './models/todos';
-import { HttpClient } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Todos } from "./models/todos";
+import { HttpClient, HttpParams } from "@angular/common/http";
+import { environment } from "src/environments/environment";
+import { Observable, of } from "rxjs";
+import { Page } from "./models/page";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TodoService {
-
-  constructor(private http: HttpClient) { }
-  API_URL = environment.apiUrl;
+  constructor(private http: HttpClient) {}
+  API_URL = `${environment.apiUrl}todos`;
 
   todoData = [
     {
@@ -103,49 +103,56 @@ export class TodoService {
     }
   ];
 
+  // getTodoLoadData(page: number, pageSize: number): Todos[] {
+  //   --page;
+  //   return this.todoData.slice(page * pageSize, (page + 1) * pageSize);
+  // }
+  // getTodoData(): Todos[] {
+  //   return this.todoData;
+  // }
 
-  getTodoLoadData(page: number, pageSize: number): Todos[] {
-    --page;
-    return this.todoData.slice(page * pageSize, (page + 1) * pageSize);
-  }
-  getTodoData(): Todos[] {
-    
-    return this.todoData;
-  }
+  // updateTodoData(index: number, user: Todos) {
+  //   this.getTodoData().splice(index, 1, user);
+  // }
 
-  updateTodoData(index: number, user: Todos) {
-     this.getTodoData().splice(index, 1, user);
-  }
-
-  createTodoData(todo: Todos) {
-     this.getTodoData().push(todo);
-  }
-  deleteTodoData(index:number){
-    this.getTodoData().splice(index, 1);
-  }
+  // createTodoData(todo: Todos) {
+  //   this.getTodoData().push(todo);
+  // }
+  // deleteTodoData(index: number) {
+  //   this.getTodoData().splice(index, 1);
+  // }
 
   // API: GET /todos
-  public getAllTodos(page: number, pageSize: number): Observable<Todos[]> {
-    return this.http.get<Todos[]>(`$(this.API_URL) $(/todos)`);
+  public getAllTodos(
+    page: number,
+    size: number,
+    searchText?: string
+  ): Observable<Page<Todos>> {
+    let params = new HttpParams()
+      .set("page", (--page).toString())
+      .set("size", size.toString())
+      .set("searchText", searchText);
+
+    return this.http.get<Page<Todos>>(`${this.API_URL}`, { params });
   }
 
   // API: POST /todos
-  public createTodo(todo: Todos) {
-    // will use this.http.post()
+  public createTodo(todo: Todos): Observable<Todos> {
+    return this.http.post<Todos>(`${this.API_URL}`, todo);
   }
 
   // API: GET /todos/:id
-  public getTodoById(todoId: number) {
-    // will use this.http.get()
+  public getTodoById(todoId: number): Observable<Todos>  {
+    return this.http.get<Todos>(`${this.API_URL}/${todoId}`);
   }
 
   // API: PUT /todos/:id
-  public updateTodo(todo: Todos) {
-    // will use this.http.put()
+  public updateTodo(todo: Todos): Observable<Todos>  {
+    return this.http.put<Todos>(`${this.API_URL}/${todo.id}`,todo);
   }
 
   // DELETE /todos/:id
-  public deleteTodoById(todoId: number) {
-    // will use this.http.delete()
+  public deleteTodoById(todoId: number): Observable<Todos>  {
+    return this.http.delete<Todos>(`${this.API_URL}/${todoId}`);
   }
 }
