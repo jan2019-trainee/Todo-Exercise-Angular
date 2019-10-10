@@ -1,11 +1,11 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "../service/toast.service";
-import { UserUpdateComponent } from "./user-update/user-update.component";
 import { ActivatedRoute, Router, ParamMap } from "@angular/router";
 import { UsersService } from "./users.service";
 import { UsersDeleteModalFormComponent } from "./users-delete-modal-form/users-delete-modal-form.component";
 import { UsersCreateModalFormComponent } from "./users-create-modal-form/users-create-modal-form.component";
+import { UserUpdateComponent } from './user-update-modal-form/user-update.component';
 
 
 @Component({
