@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" #userUpdateForm="ngForm">
   <div class="modal-header">
     <h4 class="modal-title">{{ modalTitle }}</h4>
     <button
@@ -10,64 +10,139 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
+ 
   <div class="modal-body">
     <div class="container">
       <div class="form-group">
         <label for="Id">ID</label>
         <input
+          #userID="ngModel"
           class="form-control"
           type="text"
           name="Id"
           id="Id"
           [(ngModel)]="userId"
           readonly
+          required
         />
+        <div *ngIf="userID.invalid && (userID.dirty || userID.touched)">
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="userID.errors.required"
+            >user ID is required</span
+          >
+        </div>
       </div>
 
       <div class="form-group">
         <label for="First Name">First Name</label>
         <input
+          #firstName="ngModel"
           class="form-control"
           type="text"
           name="FirstName"
           id="FirstName"
           [(ngModel)]="userFirstName"
+          [minlength]="5"
+          [maxlength]="30"
+          required
         />
+        <div
+          *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
+        >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="firstName.errors.required"
+            >First Name is required</span
+          >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="firstName.errors.minlength"
+            >First Name must be at last 5 characters long.</span
+          >
+        </div>
       </div>
+
       <div class="form-group">
         <label for="LastName">Last Name</label>
         <input
+          #lastName="ngModel"
           class="form-control"
           type="text"
           name="LastName"
           id="LastName"
           [(ngModel)]="userLastName"
+          [minlength]="5"
+          [maxlength]="30"
+          required
         />
+        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="lastName.errors.required"
+            >Last Name is required</span
+          >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="lastName.errors.minlength"
+            >Last Name must be at last 5 characters long.</span
+          >
+        </div>
       </div>
+
       <div class="form-group">
         <label for="Occupation">Occupation</label>
         <input
+          #occupation="ngModel"
           class="form-control"
           type="text"
           name="Occupation"
           id="Occupation"
           [(ngModel)]="userOccupation"
         />
+        <div
+          *ngIf="occupation.invalid && (occupation.dirty || occupation.touched)"
+        >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="occupation.errors.required"
+            >Occupation is required</span
+          >
+        </div>
       </div>
+
       <div class="form-group">
         <label for="Profile Picture">Profile Picture</label>
         <input
-          class="form-control-file"
-          type="file"
+          #profile="ngModel"
+          class="form-control"
+          type="text"
           name="ProfilePicture"
           id="ProfilePicture"
+          placeholder="Enter ProfilePicture..."
+          required
+          [(ngModel)]="userProfilePicture"
         />
+        <div *ngIf="profile.invalid && (profile.dirty || profile.touched)">
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="profile.errors.required"
+            >Profile picture is required</span
+          >
+        </div>
       </div>
     </div>
   </div>
+
   <div class="modal-footer">
     <div class="container d-flex justify-content-between">
-      <button class="btn btn-primary" type="submit">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="
+          ( userUpdateForm.form.pristine || !userUpdateForm.form.valid)
+        "
+      >
         Update User
       </button>
       <button

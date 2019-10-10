@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/service/toast.service";
 import { TodoService } from "../todo.service";
+import { FormGroup, FormControl, FormBuilder, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-todos-create-modal-form",
@@ -18,21 +19,32 @@ export class TodosCreateModalFormComponent implements OnInit {
   todoOwner: string;
   todoOwnerId: string;
 
+  todoCreateForm: FormGroup;
+
   constructor(
     public activeModal: NgbActiveModal,
-    private todoService: TodoService
-  ) {}
-
-  ngOnInit() {}
+    private formBuilder: FormBuilder
+  ) {
+   
+  }
+ 
+  ngOnInit() {
+    this.todoCreateForm = this.formBuilder.group({
+      'name': ['',[Validators.required, Validators.maxLength(100)]],
+      'description': ['',[Validators.required]],
+      'status': ['',[Validators.required]],
+      'owner_id': ['',[Validators.required]],
+    });
+  }
 
   onSubmit() {
     const params = {
-      id: this.todoId,
-      name: this.todoName,
-      description: this.todoDescription,
-      status: this.todoStatus,
+      id: '',
+      name: this.todoCreateForm.value.name,
+      description: this.todoCreateForm.value.description,
+      status: this.todoCreateForm.value.status,
       owner: {
-        id: this.todoOwnerId,
+        id: this.todoCreateForm.value.owner_id,
         first_name: null,
         last_name: null,
         occupation: null,
@@ -40,5 +52,6 @@ export class TodosCreateModalFormComponent implements OnInit {
       }
     };
     this.activeModal.close(params);
+
   }
 }

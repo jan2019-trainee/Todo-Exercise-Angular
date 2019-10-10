@@ -1,6 +1,5 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ToastService } from "src/app/service/toast.service";
 import { UsersService } from "../users.service";
 
 @Component({
@@ -10,10 +9,11 @@ import { UsersService } from "../users.service";
 })
 export class UsersCreateModalFormComponent implements OnInit {
   modalTitle = "User Create";
-  userId: string = "";
+
   userFirstName: string = "";
   userLastName: string = "";
   userOccupation: string = "";
+  userProfilePicture: string = "";
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -23,11 +23,11 @@ export class UsersCreateModalFormComponent implements OnInit {
   ngOnInit() {}
   onSubmit() {
     const params = {
-      users_id: "",
+      users_id: '',
       first_name: this.userFirstName,
       last_name: this.userLastName,
       occupation: this.userOccupation,
-      profile_picture: ""
+      profile_picture: this.userProfilePicture
     };
 
     this.activeModal.close(params);

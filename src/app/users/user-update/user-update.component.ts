@@ -18,7 +18,7 @@ export class UserUpdateComponent implements OnInit {
   userFirstName: string;
   userLastName: string;
   userOccupation: string;
-  // userProfilePicture: string;
+   userProfilePicture: string;
 
   index: Users;
 
@@ -33,7 +33,7 @@ export class UserUpdateComponent implements OnInit {
       first_name: this.userFirstName,
       last_name: this.userLastName,
       occupation: this.userOccupation,
-      profile_picture: this.user.profile_picture
+      profile_picture: this.userProfilePicture
     };
 
     this.activeModal.close(params);
@@ -44,5 +44,6 @@ export class UserUpdateComponent implements OnInit {
     this.userFirstName = this.user.first_name;
     this.userLastName = this.user.last_name;
     this.userOccupation = this.user.occupation;
+    this.userProfilePicture = this.user.profile_picture;
   }
 }

@@ -106,7 +106,6 @@ export class UsersComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
-        this.showError("Something error");
       });
   }
 
@@ -132,7 +131,6 @@ export class UsersComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
-        this.showError("Something error");
       });
   }
 
@@ -157,7 +155,6 @@ export class UsersComponent implements OnInit {
       })
       .catch(error => {
         console.log(error);
-        this.showError("Something error");
       });
   }
 

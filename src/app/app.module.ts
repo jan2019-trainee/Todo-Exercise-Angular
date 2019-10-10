@@ -16,6 +16,7 @@ import { TodosDeleteModalFormComponent } from './todos/todos-delete-modal-form/t
 import { TodosCreateModalFormComponent } from './todos/todos-create-modal-form/todos-create-modal-form.component';
 import { UsersCreateModalFormComponent } from './users/users-create-modal-form/users-create-modal-form.component';
 import { UsersDeleteModalFormComponent } from './users/users-delete-modal-form/users-delete-modal-form.component';
+import { UrlChekerDirective } from './users/directive/url-cheker.directive';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,7 @@ import { UsersDeleteModalFormComponent } from './users/users-delete-modal-form/u
     TodosDeleteModalFormComponent,
     TodosCreateModalFormComponent,
     UsersCreateModalFormComponent,
-    UsersDeleteModalFormComponent,
+    UsersDeleteModalFormComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +36,8 @@ import { UsersDeleteModalFormComponent } from './users/users-delete-modal-form/u
     UsersDetailsModule,
     TodoModule,
     NgbModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
     
   ],
   providers: [],

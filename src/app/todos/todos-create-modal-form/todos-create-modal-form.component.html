@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="todoCreateForm">
   <div class="modal-header">
     <h4 class="modal-title">{{ modalTitle }}</h4>
     <button
@@ -11,9 +11,8 @@
     </button>
   </div>
   <div class="modal-body">
-    <form action="/todos-create-modal-form">
-      <div class="container">
-        <div class="form-group">
+    <div class="container">
+      <!-- <div class="form-group">
           <label for="Id">ID</label>
           <input
             class="form-control"
@@ -25,64 +24,76 @@
             [(ngModel)]="todoId"
             [ngModelOptions]="{ standalone: true }"
             readonly
-          />
-        </div>
 
-        <div class="form-group">
-          <label for="Name">Name</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Name"
-            id="Name"
-            placeholder="Enter Name..."
-            [(ngModel)]="todoName"
-            [ngModelOptions]="{ standalone: true }"
           />
-        </div>
-        <div class="form-group">
-          <label for="Description">Description</label>
-          <textarea
-            class="form-control"
-            id="Description"
-            rows="2"
-            cols="3"
-            placeholder="Enter Description..."
-            [(ngModel)]="todoDescription"
-            [ngModelOptions]="{ standalone: true }"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="Status">Status</label>
-          <select
-            class="form-control"
-            id="status"
-            [(ngModel)]="todoStatus"
-            [ngModelOptions]="{ standalone: true }"
-          >
-            <option>on progress</option>
-            <option>finished</option>
-            <option>unfinished</option>
-          </select>
-        </div>
+        </div> -->
+
+      <div class="form-group">
+        <label for="Name">Name</label>
+        <input
+          class="form-control"
+          type="text"
+          name="Name"
+          id="Name"
+          placeholder="Enter Name..."
+          formControlName="name"
+        />
         <div>
-          <label for="Owner ID">Owner ID</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Owner"
-            id="Owner"
-            placeholder="Enter Owner Id..."
-            [(ngModel)]="todoOwnerId"
-            [ngModelOptions]="{ standalone: true }"
-          />
+          <span
+            class="d-flex justify-content-end "
+            *ngIf="todoCreateForm.value.name !== null && todoCreateForm.value.name.length <= 30"
+            >{{ todoCreateForm.value.name.length || 0 }} / 100 characters</span
+          >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="todoCreateForm.get('name').hasError('maxlength')"
+            >more than 30 characters</span
+          >
         </div>
       </div>
-    </form>
+      <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea
+          class="form-control"
+          id="Description"
+          rows="2"
+          cols="3"
+          placeholder="Enter Description..."
+          formControlName="description"
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="Status">Status</label>
+        <select class="form-control" id="status" formControlName="status">
+          <option selected value="">None</option>
+          <option [value]="Ongoing">Ongoing</option>
+          <option [value]="Finished">Finished</option>
+          <option [value]="Unfinished">Unfinished</option>
+        </select>
+      </div>
+      <div>
+        <label for="Owner ID">Owner ID</label>
+        <input
+          class="form-control"
+          type="text"
+          name="Owner"
+          id="Owner"
+          placeholder="Enter Owner Id..."
+          formControlName="owner_id"
+        />
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <div class="container d-flex justify-content-between">
-      <button class="btn btn-primary" type="submit">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="
+          !todoCreateForm.valid &&
+          (todoCreateForm.dirty || todoCreateForm.pristine)
+        "
+      >
         Create new Todo
       </button>
       <button
