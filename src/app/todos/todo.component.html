@@ -41,7 +41,9 @@
             <td>{{ todo.description }}</td>
             <td>{{ todo.status }}</td>
             <td>
-              <a routerLink="/users-details">{{ todo.owner }}</a>
+              <a routerLink="/users-details">{{
+                todo.owner.first_name + " " + todo.owner.last_name
+              }}</a>
             </td>
             <td>
               <button class="btn btn-warning" (click)="openUpdateModal(todo)">

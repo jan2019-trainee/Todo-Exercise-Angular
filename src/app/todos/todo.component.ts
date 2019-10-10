@@ -7,8 +7,13 @@ import { TodosUpdateModalFormComponent } from "./todos-update-modal-form/todos-u
 import { TodosDeleteModalFormComponent } from "./todos-delete-modal-form/todos-delete-modal-form.component";
 import { Todos } from "./models/todos";
 import { TodoService } from "./todo.service";
-import { Page } from './models/page';
-
+import { Page } from "./models/page";
+/**
+ * To be continue:
+ * todo naming must be same with BE
+ * implements CRUD
+ *
+ */
 @Component({
   selector: "app-todo",
   templateUrl: "./todo.component.html",
@@ -29,60 +34,30 @@ export class TodoComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private todosService: TodoService
   ) {
-    this.filteredTodo = this.todoData;
+    // this.filteredTodo = this.todoData;
   }
 
   ngOnInit() {
     this.getQueryParam();
     this.getTodos();
-
-    // GET USER IF FROM URL
-    // this.activatedRoute.paramMap.subscribe(
-    //   //Callback function
-    //   (paramMap: ParamMap) => {
-    //     const userId = paramMap.get("userId");
-    //     if (userId) {
-    //       console.log(userId);
-    //       this.filteredTodo = this.todoData.filter(todo => {
-    //         return todo.ownerId.toLowerCase() === userId;
-    //       });
-    //     } else {
-    //       this.filteredTodo = this.todoData;
-    //     }
-    //   }
-    // );
   }
 
   getTodos() {
-    // this.todoData = this.todosService.getTodoLoadData(
-    //   this.currentPage,
-    //   this.itemsPerPage
-    // );
-    // this.filteredTodo = this.todoData;
-    // this.totalItems = this.todosService.getTodoData().length;
-
     this.todosService
       .getAllTodos(this.currentPage, this.itemsPerPage, this.searchText)
       .subscribe((result: Page<Todos>) => {
         const searchText = this.searchText.toLocaleLowerCase();
-        this.totalItems = result.totalElements;  
-        this.filteredTodo =  result.content.filter(todo => {
-          return(todo.id.toLowerCase().includes(searchText));
-        })
+        this.totalItems = result.totalElements;
+        this.filteredTodo = result.content.filter((todo: Todos) => {
+          return (
+            todo.name.toLowerCase().includes(searchText) ||
+            todo.description.toLowerCase().includes(searchText) ||
+            todo.status.toLowerCase().includes(searchText) ||
+            todo.owner.first_name.toLowerCase().includes(searchText) ||
+            todo.owner.last_name.toLowerCase().includes(searchText)
+          );
+        });
       });
-    // this.usersService
-    // .getAllUsers(this.currentPage, this.itemsPerPage, this.searchText)
-    // .subscribe((result: Page<Users>) => {
-    //   const searchText = this.searchText.toLocaleLowerCase();
-    //   this.totalItems = result.totalElements;
-    //   this.filteredData = result.content.filter(user => {
-    //     return (
-    //       user.first_name.toLowerCase().includes(searchText) ||
-    //       user.last_name.toLowerCase().includes(searchText) ||
-    //       user.occupation.toLowerCase().includes(searchText)
-    //     );
-    //   });
-    // });
   }
   getQueryParam() {
     this.itemsPerPage =
@@ -90,8 +65,11 @@ export class TodoComponent implements OnInit {
     this.currentPage =
       parseInt(this.activatedRoute.snapshot.queryParamMap.get("page")) || 1;
     this.searchText =
-      this.activatedRoute.snapshot.queryParamMap.get("searchText") || null;
+      this.activatedRoute.snapshot.queryParamMap.get("searchText") || "";
 
+    this.getNavigate();
+  }
+  getNavigate() {
     this.router.navigate(["/todos"], {
       queryParams: {
         page: this.currentPage,
@@ -102,27 +80,8 @@ export class TodoComponent implements OnInit {
   }
 
   onSearch() {
-    this.router.navigate(["/todos"], {
-      queryParams: {
-        page: this.currentPage,
-        size: this.itemsPerPage,
-        searchText: this.searchText
-      }
-    });
-    const searchText = this.searchText.toLocaleLowerCase();
-    if (this.searchText) {
-      this.filteredTodo = this.todoData.filter(todo => {
-        return (
-          todo.id.toLowerCase().includes(searchText) ||
-          todo.name.toLowerCase().includes(searchText) ||
-          todo.description.toLowerCase().includes(searchText) ||
-          todo.status.toLowerCase().includes(searchText) ||
-          todo.owner.first_name.toLowerCase().includes(searchText)
-        );
-      });
-    } else {
-      this.filteredTodo = this.todoData;
-    }
+    this.getNavigate();
+    this.getTodos();
   }
 
   openUpdateModal(todo) {
@@ -133,9 +92,17 @@ export class TodoComponent implements OnInit {
 
     modalRef.result
       .then(result => {
-        this.getTodos();
-        this.showSuccess();
-        console.log(result);
+        this.todosService.createTodo(result).subscribe(
+          data => {
+            console.log("PUT Request is successful");
+            this.getTodos();
+            this.showSuccess("PUT Request is successful");
+          },
+          error => {
+            console.log("Error", error);
+            this.showError("PUT Request is not successful");
+          }
+        );
       })
       .catch(error => {
         console.log(error);
@@ -149,9 +116,17 @@ export class TodoComponent implements OnInit {
 
     modalRef.result
       .then(result => {
-        this.getTodos();
-        this.showSuccess();
-        console.log(result);
+        this.todosService.deleteTodoById(result.id).subscribe(
+          data => {
+            console.log("DELETE Request is successful");
+            this.getTodos();
+            this.showSuccess("DELETE Request is successful");
+          },
+          error => {
+            console.log("Error", error);
+            this.showError("DELETE Request is not successful");
+          }
+        );
       })
       .catch(error => {
         console.log(error);
@@ -164,9 +139,21 @@ export class TodoComponent implements OnInit {
 
     modalRef.result
       .then(result => {
-        this.getTodos();
-        this.showSuccess();
-        console.log(result);
+        this.todosService.createTodo(result).subscribe(
+          () => {
+            console.log("POST Request is successful");
+            this.getTodos();
+            this.showSuccess("POST Request is successful");
+          },
+          error => {
+            console.log("Error", error);
+            this.showError(
+              "POST Request is not successful, owner id: " +
+                result.owner.id +
+                " did not exist"
+            );
+          }
+        );
       })
       .catch(error => {
         console.log(error);
@@ -185,15 +172,15 @@ export class TodoComponent implements OnInit {
     this.getTodos();
   }
 
-  showSuccess() {
-    this.toastService.show("Success!", {
+  showSuccess(message: string) {
+    this.toastService.show(message, {
       classname: "bg-success text-light",
       delay: 5000,
       autohide: true
     });
   }
-  showError() {
-    this.toastService.show("Data Not Saved!", {
+  showError(message: string) {
+    this.toastService.show(message, {
       classname: "bg-danger text-light",
       delay: 5000,
       autohide: true

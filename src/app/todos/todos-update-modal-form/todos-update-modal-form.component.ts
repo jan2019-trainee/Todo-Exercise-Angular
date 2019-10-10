@@ -27,36 +27,27 @@ export class TodosUpdateModalFormComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.index = this.todoService
-      .getTodoData()
-      .find(user => user.id === this.todo.id);
-
     this.todoId = this.todo.id;
     this.todoName = this.todo.name;
     this.todoDescription = this.todo.description;
     this.todoStatus = this.todo.status;
-    this.todoOwner = this.todo.owner;
-    this.todoOwnerId = this.todo.ownerId;
+    this.todoOwnerId = this.todo.owner.id;
   }
 
   onSubmit() {
-    const params: Todos = {
+    const params = {
       id: this.todoId,
       name: this.todoName,
       description: this.todoDescription,
       status: this.todoStatus,
-      owner: this.todoOwner,
-      ownerId: this.todo.ownerId
+      owner: {
+        id: this.todoOwnerId,
+        first_name: null,
+        last_name: null,
+        occupation: null,
+        profile_picture: null
+      }
     };
-
-    const todoData = this.todoService.getTodoData();
-    let index = todoData.indexOf(this.index);
-    this.todoService.updateTodoData(index, params);
-    this.closeModal();
-
-  }
-
-  closeModal() {
-    this.activeModal.close("Modal Closed");
+    this.activeModal.close(params);
   }
 }

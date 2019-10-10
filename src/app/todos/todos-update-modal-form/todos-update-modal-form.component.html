@@ -23,7 +23,7 @@
             placeholder="Enter ID..."
             [(ngModel)]="todoId"
             readonly
-            [ngModelOptions]="{standalone: true}"
+            [ngModelOptions]="{ standalone: true }"
           />
         </div>
 
@@ -36,7 +36,7 @@
             id="Name"
             placeholder="Enter Name..."
             [(ngModel)]="todoName"
-            [ngModelOptions]="{standalone: true}"
+            [ngModelOptions]="{ standalone: true }"
           />
         </div>
         <div class="form-group">
@@ -48,13 +48,12 @@
             cols="3"
             placeholder="Enter Description..."
             [(ngModel)]="todoDescription"
-            [ngModelOptions]="{standalone: true}"
-            
+            [ngModelOptions]="{ standalone: true }"
           ></textarea>
         </div>
         <div class="form-group">
           <label for="Status">Status</label>
-          <select class="form-control" id="status" [(ngModel)]="todoStatus"  >
+          <select class="form-control" id="status" [(ngModel)]="todoStatus">
             <option>on progress</option>
             <option>finished</option>
             <option>unfinished</option>
@@ -69,7 +68,7 @@
             id="Owner"
             placeholder="Enter Owner ID..."
             [(ngModel)]="todoOwnerId"
-            [ngModelOptions]="{standalone: true}"
+            [ngModelOptions]="{ standalone: true }"
           />
         </div>
       </div>

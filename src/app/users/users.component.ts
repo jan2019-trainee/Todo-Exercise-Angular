@@ -99,11 +99,10 @@ export class UsersComponent implements OnInit {
             this.showSuccess("DELETE Request is successful");
           },
           error => {
-            console.log("Error", error,result);
+            console.log("Error", error);
             this.showError("DELETE Request is not successful");
           }
         );
-    
       })
       .catch(error => {
         console.log(error);
@@ -119,7 +118,6 @@ export class UsersComponent implements OnInit {
 
     modalRef.result
       .then(result => {
-
         this.usersService.createUsers(result).subscribe(
           data => {
             console.log("PUT Request is successful");
@@ -131,7 +129,6 @@ export class UsersComponent implements OnInit {
             this.showError("PUT Request is not successful");
           }
         );
-
       })
       .catch(error => {
         console.log(error);
@@ -146,7 +143,6 @@ export class UsersComponent implements OnInit {
 
     modalRef.result
       .then(result => {
-
         this.usersService.createUsers(result).subscribe(
           () => {
             console.log("POST Request is successful");
@@ -158,7 +154,6 @@ export class UsersComponent implements OnInit {
             this.showError("POST Request is not successful");
           }
         );
-
       })
       .catch(error => {
         console.log(error);
@@ -171,14 +166,14 @@ export class UsersComponent implements OnInit {
     this.getUsers();
   }
 
-  showSuccess(message:string) {
+  showSuccess(message: string) {
     this.toastService.show(message, {
       classname: "bg-success text-light",
       delay: 5000,
       autohide: true
     });
   }
-  showError(message:string) {
+  showError(message: string) {
     this.toastService.show(message, {
       classname: "bg-danger text-light",
       delay: 5000,

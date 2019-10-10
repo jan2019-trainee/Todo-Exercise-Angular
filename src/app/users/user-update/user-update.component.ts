@@ -28,25 +28,21 @@ export class UserUpdateComponent implements OnInit {
   ) {}
 
   onSubmit() {
-
     const params = {
       id: this.user.id,
-      first_name : this.userFirstName,
-      last_name : this.userLastName,
-      occupation : this.userOccupation,
-      profile_picture : this.user.profile_picture
-     };
+      first_name: this.userFirstName,
+      last_name: this.userLastName,
+      occupation: this.userOccupation,
+      profile_picture: this.user.profile_picture
+    };
 
-     this.activeModal.close(params);
-    
+    this.activeModal.close(params);
   }
 
   ngOnInit() {
-   
     this.userId = this.user.id;
     this.userFirstName = this.user.first_name;
     this.userLastName = this.user.last_name;
     this.userOccupation = this.user.occupation;
   }
-
 }
