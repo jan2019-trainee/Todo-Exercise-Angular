@@ -1,7 +1,7 @@
 export interface Users {
-    id: string,
-    firstName: string,
-    lastName: string,
+    users_id: string,
+    first_name: string,
+    last_name: string,
     occupation: string,
-    profilePicture: string
+    profile_picture: string
 }

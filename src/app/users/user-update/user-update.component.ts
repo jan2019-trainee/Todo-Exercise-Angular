@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { UsersService } from "../users.service";
-
+import { Users } from "../models/users";
 
 @Component({
   selector: "app-user-update",
@@ -20,7 +20,7 @@ export class UserUpdateComponent implements OnInit {
   userOccupation: string;
   // userProfilePicture: string;
 
-  index;
+  index: Users;
 
   constructor(
     public activeModal: NgbActiveModal,
@@ -28,40 +28,21 @@ export class UserUpdateComponent implements OnInit {
   ) {}
 
   onSubmit() {
- 
-    const params = { 
+    const params = {
       id: this.user.id,
-      firstName : this.userFirstName,
-      lastName : this.userLastName,
-      occupation : this.userOccupation,
-      profilePicture : this.user.profilePicture
-     };
+      first_name: this.userFirstName,
+      last_name: this.userLastName,
+      occupation: this.userOccupation,
+      profile_picture: this.user.profile_picture
+    };
 
-     const userData = this.usersService.getUserData();
-     let indexfound = userData.indexOf(this.index);
-     this.usersService.updateUserData(indexfound,params)
-     
-     this.closeModal();
+    this.activeModal.close(params);
   }
 
   ngOnInit() {
-    this.index = this.usersService
-      .getUserData()
-      .find(this.findIndexToUpdate, this.user.id);
-
-    this.userId = this.index.id;
-    this.userFirstName = this.index.firstName;
-    this.userLastName = this.index.lastName;
-    this.userOccupation = this.index.occupation;
-
-    console.log(this.index.id);
-  }
-
-  closeModal() {
-    this.activeModal.close("Modal Closed");
-  }
-
-  findIndexToUpdate(newItem) {
-    return newItem.id === this;
+    this.userId = this.user.id;
+    this.userFirstName = this.user.first_name;
+    this.userLastName = this.user.last_name;
+    this.userOccupation = this.user.occupation;
   }
 }

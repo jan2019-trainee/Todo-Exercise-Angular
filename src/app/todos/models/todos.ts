@@ -3,6 +3,11 @@ export interface Todos {
   name: string;
   description: string;
   status: string;
-  owner: string;
-  ownerId: string;
+  owner: {
+    id: string,
+    first_name: string,
+    last_name: string,
+    occupation: string,
+    profile_picture: string
+  }
 }

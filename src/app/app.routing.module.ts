@@ -4,13 +4,13 @@ import { Routes, RouterModule } from "@angular/router";
 
 const routes: Routes = [
   {
-    path: 'users',
-    loadChildren: './users/users.module#UsersModule'
-  },
-  {
     path: 'todos',
     loadChildren: './todos/todo.module#TodoModule'
     
+  },
+  {
+    path: 'users',
+    loadChildren: './users/users.module#UsersModule'
   }
 ];
 

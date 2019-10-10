@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { ToastService } from "src/app/service/toast.service";
-import { TodoService } from '../todo.service';
+import { TodoService } from "../todo.service";
 
 @Component({
   selector: "app-todos-create-modal-form",
@@ -23,27 +23,22 @@ export class TodosCreateModalFormComponent implements OnInit {
     private todoService: TodoService
   ) {}
 
-  ngOnInit() {
-    this.todoId = Math.max.apply(Math, this.todoService.getTodoData().map(todo => { return todo.id; })) + 1;
-  }
+  ngOnInit() {}
 
-  onSubmit(){
-    const params = { 
+  onSubmit() {
+    const params = {
       id: this.todoId,
       name: this.todoName,
       description: this.todoDescription,
       status: this.todoStatus,
-      owner: this.todoOwner,
-      ownerId: null
-     };
-     this.todoService.createTodoData(params);
-     
-    this.activeModal.close();
+      owner: {
+        id: this.todoOwnerId,
+        first_name: null,
+        last_name: null,
+        occupation: null,
+        profile_picture: null
+      }
+    };
+    this.activeModal.close(params);
   }
-
-
-  closeModal() {
-    this.activeModal.close("Modal Closed");
-  }
-
 }
