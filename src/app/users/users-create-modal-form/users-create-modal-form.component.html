@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()" #userCreateForm="ngForm">
+<form (ngSubmit)="onSubmit()" #userCreateForm="ngForm" >
   <div class="modal-header">
     <h4 class="modal-title">{{ modalTitle }}</h4>
     <button
@@ -27,17 +27,14 @@
           required
         />
         <div
+          class="d-flex justify-content-end text-danger"
           *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)"
         >
-          <span
-            class="d-flex justify-content-end text-danger"
-            *ngIf="firstName.errors.required"
+          <span *ngIf="firstName.errors.required"
             >First Name is required</span
           >
-          <span
-            class="d-flex justify-content-end text-danger"
-            *ngIf="firstName.errors.minlength"
-            >First Name must be at last 5 characters long.</span
+          <span *ngIf="firstName.errors.minlength"
+            >First Name must be atleast 5 characters long.</span
           >
         </div>
       </div>
@@ -55,15 +52,12 @@
           [maxlength]="30"
           required
         />
-        <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)">
-          <span
-            class="d-flex justify-content-end text-danger"
-            *ngIf="lastName.errors.required"
-            >Last Name is required</span
-          >
-          <span
-            class="d-flex justify-content-end text-danger"
-            *ngIf="lastName.errors.minlength"
+        <div
+          class="d-flex justify-content-end text-danger"
+          *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)"
+        >
+          <span *ngIf="lastName.errors.required">Last Name is required</span>
+          <span *ngIf="lastName.errors.minlength"
             >Last Name must be at last 5 characters long.</span
           >
         </div>
@@ -83,18 +77,13 @@
           pattern="(\w.+\s).+"
         />
         <div
+          class="d-flex justify-content-end text-danger"
           *ngIf="occupation.invalid && (occupation.dirty || occupation.touched)"
         >
-          <span
-            class="d-flex justify-content-end text-danger"
-            *ngIf="occupation.errors.required"
-            >Occupation is required</span
+          <span *ngIf="occupation.errors.required">Occupation is required</span>
+          <span *ngIf="occupation.errors.pattern"
+            >Occupation atleast 2 words.</span
           >
-          <span
-              class="d-flex justify-content-end text-danger"
-              *ngIf="occupation.errors.pattern"
-              >Occupation atleast 2 words.</span
-            >
         </div>
       </div>
       <div>
@@ -111,17 +100,17 @@
           pattern="(https?:\/\/.*\.(?:png|jpg))"
         />
 
-        <div *ngIf="profile.invalid && (profile.dirty || profile.touched)">
-          <span
-            class="d-flex justify-content-end text-danger"
-            *ngIf="profile.errors.required"
+        <div
+          class="d-flex justify-content-end text-danger"
+          *ngIf="profile.invalid && (profile.dirty || profile.touched)"
+        >
+          <span *ngIf="profile.errors.required"
             >Profile picture is required</span
           >
-          <span
-              class="d-flex justify-content-end text-danger"
-              *ngIf="profile.errors.pattern"
-              >Photo URL must start with 'HTTP' or 'https' and ends with '.png' or '.jpg'.</span
-            >
+          <span *ngIf="profile.errors.pattern"
+            >Photo URL must start with 'HTTP' or 'https' and ends with '.png' or
+            '.jpg'.</span
+          >
         </div>
       </div>
     </div>

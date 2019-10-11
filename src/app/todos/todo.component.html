@@ -18,10 +18,10 @@
       </button>
     </div>
     <div class="table-responsive-sm">
-      <span *ngIf="filteredTodo.length == 0">NO RESULT</span>
+      <span *ngIf="filteredTodoLength == 0">NO RESULT</span>
       <table
         class="table table-striped table-hover table-sm "
-        *ngIf="filteredTodo.length > 0"
+        *ngIf="filteredTodoLength > 0"
       >
         <thead>
           <tr class="txt-align-center border-1 bg-gray">
@@ -41,9 +41,7 @@
             <td>{{ todo.description }}</td>
             <td>{{ todo.status }}</td>
             <td>
-              <a routerLink="/users-details">{{
-                todo.owner.first_name + " " + todo.owner.last_name
-              }}</a>
+              {{ todo.owner.first_name + " " + todo.owner.last_name }}
             </td>
             <td>
               <button class="btn btn-warning" (click)="openUpdateModal(todo)">
@@ -73,6 +71,23 @@
           </tr>
         </tfoot>
       </table>
+
+      <!-- <div class="form-group" >
+          <span>select</span>
+          <select
+            class="selectpicker"
+            data-live-search="true"
+            name="Owner"
+            formControlName="owner_id"
+          >
+            <option value="">None</option>
+            <option *ngFor="let userlist of filteredTodo" [ngValue]="userlist.id">{{
+              userlist.id
+            }}</option>
+            
+          </select>
+          
+        </div> -->
     </div>
   </div>
 </body>

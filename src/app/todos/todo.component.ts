@@ -8,38 +8,86 @@ import { TodosDeleteModalFormComponent } from "./todos-delete-modal-form/todos-d
 import { Todos } from "./models/todos";
 import { TodoService } from "./todo.service";
 import { Page } from "./models/page";
-/**
- * To be continue:
- * todo naming must be same with BE
- * implements CRUD
- *
- */
+import { UsersService } from '../users/users.service';
+import { Users } from '../users/models/users';
+
+
 @Component({
   selector: "app-todo",
   templateUrl: "./todo.component.html",
   styleUrls: ["./todo.component.scss"]
 })
 export class TodoComponent implements OnInit {
+  UsersData : Users[];
   todoData: Todos[];
-  filteredTodo: any[];
+  filteredTodo: Todos[];
+  filteredTodoLength: number;
+
   itemsPerPage: number = 10;
   currentPage: number = 1;
   totalItems: number;
-  searchText?: string;
+  searchText?: string = "";
 
   constructor(
     private modalService: NgbModal,
     public toastService: ToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private todosService: TodoService
-  ) {
-    // this.filteredTodo = this.todoData;
-  }
+    private todosService: TodoService,
+    private usersService: UsersService
+  ) {}
 
   ngOnInit() {
-    this.getQueryParam();
-    this.getTodos();
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      const userId = paramMap.get("userId");
+      console.log(userId);
+      if (userId) {
+        this.todosService
+          .getAllTodos(this.currentPage, this.itemsPerPage, this.searchText)
+          .subscribe((result: Page<Todos>) => {
+            console.log(userId);
+            const searchText = this.searchText.toLocaleLowerCase();
+            this.totalItems = result.totalElements;
+
+            this.filteredTodo = result.content.filter((todo: Todos) => {
+              if (searchText) {
+                console.log(searchText);
+                return (
+                  todo.owner.id == userId &&
+                  (todo.name.toLowerCase().includes(searchText) ||
+                    todo.description.toLowerCase().includes(searchText) ||
+                    todo.status.toLowerCase().includes(searchText))
+                );
+              } else return todo.owner.id == userId;
+            });
+            this.filteredTodoLength = this.filteredTodo.length;
+          });
+      } else {
+        this.getQueryParam();
+        this.getTodos();
+      }
+    });
+
+
+  }
+  getUsers(){
+    this.usersService
+      .getAllUsers(this.currentPage, this.itemsPerPage, this.searchText)
+      .subscribe((result: Page<Users>) => {
+        const searchText = this.searchText.toLocaleLowerCase();
+        this.totalItems = result.totalElements;
+
+        this.UsersData = result.content.filter(user => {
+          
+          return (
+            user.first_name.toLowerCase().includes(searchText) ||
+            user.last_name.toLowerCase().includes(searchText) ||
+            user.occupation.toLowerCase().includes(searchText)
+          );
+          
+        });
+       
+      });
   }
 
   getTodos() {
@@ -47,7 +95,9 @@ export class TodoComponent implements OnInit {
       .getAllTodos(this.currentPage, this.itemsPerPage, this.searchText)
       .subscribe((result: Page<Todos>) => {
         const searchText = this.searchText.toLocaleLowerCase();
+
         this.totalItems = result.totalElements;
+
         this.filteredTodo = result.content.filter((todo: Todos) => {
           return (
             todo.name.toLowerCase().includes(searchText) ||
@@ -57,6 +107,8 @@ export class TodoComponent implements OnInit {
             todo.owner.last_name.toLowerCase().includes(searchText)
           );
         });
+
+        this.filteredTodoLength = this.filteredTodo.length;
       });
   }
   getQueryParam() {
@@ -92,7 +144,8 @@ export class TodoComponent implements OnInit {
 
     modalRef.result
       .then(result => {
-        this.todosService.createTodo(result).subscribe(
+        console.log(result);
+        this.todosService.updateTodo(result).subscribe(
           data => {
             console.log("PUT Request is successful");
             this.getTodos();
@@ -100,6 +153,7 @@ export class TodoComponent implements OnInit {
           },
           error => {
             console.log("Error", error);
+
             this.showError("PUT Request is not successful");
           }
         );
@@ -136,6 +190,7 @@ export class TodoComponent implements OnInit {
     const modalRef = this.modalService.open(TodosCreateModalFormComponent, {
       size: "lg"
     });
+    modalRef.componentInstance.usersList = this.UsersData;
 
     modalRef.result
       .then(result => {

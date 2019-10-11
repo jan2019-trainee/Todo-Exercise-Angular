@@ -7,10 +7,16 @@ import { UserUpdateComponent } from "./user-update/user-update.component";
 
 import { UsersRoutingModule } from "./users.routing.module";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
-import { UrlChekerDirective } from "./directive/url-cheker.directive";
+import { UsersCreateModalFormComponent } from './users-create-modal-form/users-create-modal-form.component';
+import { UsersDeleteModalFormComponent } from './users-delete-modal-form/users-delete-modal-form.component';
 
 @NgModule({
-  declarations: [UsersComponent, UserUpdateComponent, UrlChekerDirective],
+  declarations: [
+    UsersComponent,
+    UserUpdateComponent,
+    UsersCreateModalFormComponent,
+    UsersDeleteModalFormComponent,
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,6 +24,11 @@ import { UrlChekerDirective } from "./directive/url-cheker.directive";
     UsersRoutingModule,
     NgbModule,
     ReactiveFormsModule
+  ],
+  entryComponents:[
+    UserUpdateComponent,
+    UsersDeleteModalFormComponent,
+    UsersCreateModalFormComponent
   ]
 })
 export class UsersModule {}

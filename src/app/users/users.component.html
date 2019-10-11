@@ -19,11 +19,11 @@
   </div>
   <div>
     <div class="table-responsive-sm">
-      <span *ngIf="filteredData.length == 0">NO RESULT</span>
+      <span *ngIf="filteredDataLength == 0">NO RESULT</span>
       <table
         class="table table-striped table-hover table-sm"
         id="users-table"
-        *ngIf="filteredData.length > 0"
+        *ngIf="filteredDataLength > 0"
       >
         <thead>
           <tr class="txt-align-center border-1 bg-gray">

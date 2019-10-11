@@ -22,6 +22,7 @@ export class UsersComponent implements OnInit {
   currentPage: number = 1;
   totalItems: number;
   searchText?: string;
+  filteredDataLength: number;
 
   constructor(
     private usersService: UsersService,
@@ -48,27 +49,23 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers() {
-    // this.userData = this.usersService.getUserData1(
-    //   this.currentPage,
-    //   this.itemsPerPage
-    // );
-    //  this.filteredData = this.userData;
-
-    // this.totalItems = this.usersService.getUserData().length;
-
     this.getNavigate();
     this.usersService
       .getAllUsers(this.currentPage, this.itemsPerPage, this.searchText)
       .subscribe((result: Page<Users>) => {
         const searchText = this.searchText.toLocaleLowerCase();
         this.totalItems = result.totalElements;
+
         this.filteredData = result.content.filter(user => {
+          
           return (
             user.first_name.toLowerCase().includes(searchText) ||
             user.last_name.toLowerCase().includes(searchText) ||
             user.occupation.toLowerCase().includes(searchText)
           );
+          
         });
+        this.filteredDataLength = this.filteredData.length;
       });
   }
   getNavigate() {

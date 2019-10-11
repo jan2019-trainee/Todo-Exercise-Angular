@@ -12,22 +12,6 @@
   </div>
   <div class="modal-body">
     <div class="container">
-      <!-- <div class="form-group">
-          <label for="Id">ID</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Id"
-            id="Id"
-            placeholder="Enter ID..."
-            readonly
-            [(ngModel)]="todoId"
-            [ngModelOptions]="{ standalone: true }"
-            readonly
-
-          />
-        </div> -->
-
       <div class="form-group">
         <label for="Name">Name</label>
         <input
@@ -38,16 +22,25 @@
           placeholder="Enter Name..."
           formControlName="name"
         />
-        <div>
+        <div class="d-flex flex-column">
           <span
-            class="d-flex justify-content-end "
-            *ngIf="todoCreateForm.value.name !== null && todoCreateForm.value.name.length <= 30"
+            class="d-flex justify-content-end"
+            *ngIf="todoCreateForm.value.name !== null"
             >{{ todoCreateForm.value.name.length || 0 }} / 100 characters</span
           >
           <span
             class="d-flex justify-content-end text-danger"
             *ngIf="todoCreateForm.get('name').hasError('maxlength')"
-            >more than 30 characters</span
+            >Must not more than 100 characters</span
+          >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="
+              todoCreateForm.get('name').hasError('required') &&
+              todoCreateForm.get('name').dirty &&
+              todoCreateForm.get('name').invalid
+            "
+            >Name is required</span
           >
         </div>
       </div>
@@ -61,26 +54,82 @@
           placeholder="Enter Description..."
           formControlName="description"
         ></textarea>
+        <div
+          class="d-flex justify-content-end text-danger"
+          *ngIf="
+            todoCreateForm.get('description').hasError('required') &&
+            todoCreateForm.get('description').dirty &&
+            todoCreateForm.get('description').invalid
+          "
+        >
+          <span *ngIf="todoCreateForm.get('description').hasError('required')"
+            >Description is required</span
+          >
+        </div>
       </div>
       <div class="form-group">
         <label for="Status">Status</label>
         <select class="form-control" id="status" formControlName="status">
           <option selected value="">None</option>
-          <option [value]="Ongoing">Ongoing</option>
-          <option [value]="Finished">Finished</option>
-          <option [value]="Unfinished">Unfinished</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Finished">Finished</option>
+          <option value="Unfinished">Unfinished</option>
         </select>
+        <div
+          class="d-flex justify-content-end text-danger"
+          *ngIf="
+            todoCreateForm.get('status').hasError('required') &&
+            todoCreateForm.get('status').dirty &&
+            todoCreateForm.get('status').invalid
+          "
+        >
+          <span *ngIf="todoCreateForm.get('status').hasError('required')"
+            >Status is required</span
+          >
+        </div>
       </div>
+
+      <!-- <div class="form-group">
+        <span>select</span>
+        <select
+          class="selectpicker"
+          data-live-search="true"
+          name="Owner"
+          formControlName="owner_id2"
+        >
+          <option value="">None</option>
+          <option *ngFor="let userlist of userData" [ngValue]="userlist.id">{{
+            userlist.id
+          }}</option>
+        </select>
+      </div> -->
       <div>
-        <label for="Owner ID">Owner ID</label>
-        <input
+        <label for="Owner ID">Owner</label>
+        <select
           class="form-control"
           type="text"
           name="Owner"
           id="Owner"
-          placeholder="Enter Owner Id..."
+          placeholder="Enter Owner..."
           formControlName="owner_id"
-        />
+        >
+          <option *ngFor="let user of userData" [ngValue]="user.id"
+            >{{ user.first_name }} {{ user.last_name }}</option
+          >
+        </select>
+        <div
+          *ngIf="
+            todoCreateForm.get('owner_id').hasError('required') &&
+            todoCreateForm.get('owner_id').dirty &&
+            todoCreateForm.get('owner_id').invalid
+          "
+        >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="todoCreateForm.get('owner_id').hasError('required')"
+            >Owner Id is required</span
+          >
+        </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<form (ngSubmit)="onSubmit()">
+<form (ngSubmit)="onSubmit()" [formGroup]="todoUpdateForm">
   <div class="modal-header">
     <h4 class="modal-title">{{ modalTitle }}</h4>
     <button
@@ -11,72 +11,133 @@
     </button>
   </div>
   <div class="modal-body">
-    <form action="/todos-create-modal-form">
-      <div class="container">
-        <div class="form-group">
-          <label for="Id">ID</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Id"
-            id="Id"
-            placeholder="Enter ID..."
-            [(ngModel)]="todoId"
-            readonly
-            [ngModelOptions]="{ standalone: true }"
-          />
-        </div>
+    <div class="container">
+      <div class="form-group">
+        <label for="Id">ID</label>
+        <input
+          class="form-control"
+          type="text"
+          name="Id"
+          id="Id"
+          placeholder="Enter ID..."
+          readonly
+          formControlName="todoId"
+        />
+      </div>
 
-        <div class="form-group">
-          <label for="Name">Name</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Name"
-            id="Name"
-            placeholder="Enter Name..."
-            [(ngModel)]="todoName"
-            [ngModelOptions]="{ standalone: true }"
-          />
-        </div>
-        <div class="form-group">
-          <label for="Description">Description</label>
-          <textarea
-            class="form-control"
-            id="Description"
-            rows="2"
-            cols="3"
-            placeholder="Enter Description..."
-            [(ngModel)]="todoDescription"
-            [ngModelOptions]="{ standalone: true }"
-          ></textarea>
-        </div>
-        <div class="form-group">
-          <label for="Status">Status</label>
-          <select class="form-control" id="status" [(ngModel)]="todoStatus">
-            <option>on progress</option>
-            <option>finished</option>
-            <option>unfinished</option>
-          </select>
-        </div>
-        <div>
-          <label for="Owner ID">Owner ID</label>
-          <input
-            class="form-control"
-            type="text"
-            name="Owner"
-            id="Owner"
-            placeholder="Enter Owner ID..."
-            [(ngModel)]="todoOwnerId"
-            [ngModelOptions]="{ standalone: true }"
-          />
+      <div class="form-group">
+        <label for="Name">Name</label>
+        <input
+          class="form-control"
+          type="text"
+          name="Name"
+          id="Name"
+          placeholder="Enter Name..."
+          formControlName="name"
+        />
+        <div class="d-flex flex-column">
+          <span
+            class="d-flex justify-content-end"
+            *ngIf="todoUpdateForm.value.name !== null"
+            >{{ todoUpdateForm.value.name.length || 0 }} / 100 characters</span
+          >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="todoUpdateForm.get('name').hasError('maxlength')"
+            >Must not more than 30 characters</span
+          >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="
+              todoUpdateForm.get('name').hasError('required') &&
+              todoUpdateForm.get('name').dirty &&
+              todoUpdateForm.get('name').invalid
+            "
+            >Name is required</span
+          >
         </div>
       </div>
-    </form>
+      <div class="form-group">
+        <label for="Description">Description</label>
+        <textarea
+          class="form-control"
+          id="Description"
+          rows="2"
+          cols="3"
+          placeholder="Enter Description..."
+          formControlName="description"
+        ></textarea>
+        <div
+          class="d-flex justify-content-end text-danger"
+          *ngIf="
+            todoUpdateForm.get('description').hasError('required') &&
+            todoUpdateForm.get('description').dirty &&
+            todoUpdateForm.get('description').invalid
+          "
+        >
+          <span *ngIf="todoUpdateForm.get('description').hasError('required')"
+            >Description is required</span
+          >
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="Status">Status</label>
+        <select class="form-control" id="status" formControlName="status">
+          <option selected value="">None</option>
+          <option value="Ongoing">Ongoing</option>
+          <option value="Finished">Finished</option>
+          <option value="Unfinished">Unfinished</option>
+        </select>
+        <div
+          class="d-flex justify-content-end text-danger"
+          *ngIf="
+            todoUpdateForm.get('status').hasError('required') &&
+            todoUpdateForm.get('status').dirty &&
+            todoUpdateForm.get('status').invalid
+          "
+        >
+          <span *ngIf="todoUpdateForm.get('status').hasError('required')"
+            >Status is required</span
+          >
+        </div>
+      </div>
+      <div>
+        <label for="Owner ID">Owner ID</label>
+        <select
+          class="form-control"
+          type="text"
+          name="Owner"
+          id="Owner"
+          placeholder="Enter Owner..."
+          formControlName="owner_id"
+        >
+          <option *ngFor="let user of userData" [ngValue]="user.id"
+            >{{ user.first_name }} {{ user.last_name }}</option
+          >
+        </select>
+        <div
+          *ngIf="
+            todoUpdateForm.get('owner_id').hasError('required') &&
+            todoUpdateForm.get('owner_id').dirty &&
+            todoUpdateForm.get('owner_id').invalid
+          "
+        >
+          <span
+            class="d-flex justify-content-end text-danger"
+            *ngIf="todoUpdateForm.get('owner_id').hasError('required')"
+            >Owner Id is required</span
+          >
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-footer">
     <div class="container d-flex justify-content-between">
-      <button class="btn btn-primary" type="submit">
+      <button
+        class="btn btn-primary"
+        type="submit"
+        [disabled]="todoUpdateForm.pristine || !todoUpdateForm.valid"
+      >
         Update Todo
       </button>
       <button

@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
-import { ToastService } from "src/app/service/toast.service";
-import { Todos } from "../models/todos";
-import { TodoService } from "../todo.service";
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Page } from 'src/app/users/models/page';
+import { Users } from 'src/app/users/models/users';
+import { UsersService } from 'src/app/users/users.service';
 
 @Component({
   selector: "app-todos-update-modal-form",
@@ -13,35 +14,40 @@ export class TodosUpdateModalFormComponent implements OnInit {
   @Input() public todo;
   modalTitle = "Todo Update";
 
-  todoId: string;
-  todoName: string;
-  todoDescription: string;
-  todoStatus: string;
-  todoOwner: string;
-  todoOwnerId: string;
-  index: Todos;
+  userData: Users[];
+  todoUpdateForm: FormGroup;
 
   constructor(
     public activeModal: NgbActiveModal,
-    private todoService: TodoService
+    private formBuilder: FormBuilder,
+    private userService: UsersService
   ) {}
 
   ngOnInit() {
-    this.todoId = this.todo.id;
-    this.todoName = this.todo.name;
-    this.todoDescription = this.todo.description;
-    this.todoStatus = this.todo.status;
-    this.todoOwnerId = this.todo.owner.id;
+    this.userService
+    .getAllUsers(1, 5)
+    .subscribe((data: Page<Users>) => {
+      this.userData = data.content;
+     console.log(this.userData);
+    });
+
+    this.todoUpdateForm = this.formBuilder.group({
+      'todoId': [this.todo.id],
+      'name': [this.todo.name,[Validators.required, Validators.maxLength(100)]],
+      'description': [this.todo.description,[Validators.required]],
+      'status': [this.todo.status,[Validators.required]],
+      'owner_id': [this.todo.owner.id,[Validators.required]],
+    });
   }
 
   onSubmit() {
     const params = {
-      id: this.todoId,
-      name: this.todoName,
-      description: this.todoDescription,
-      status: this.todoStatus,
+      id: this.todoUpdateForm.value.todoId,
+      name: this.todoUpdateForm.value.name,
+      description: this.todoUpdateForm.value.description,
+      status: this.todoUpdateForm.value.status,
       owner: {
-        id: this.todoOwnerId,
+        id: this.todoUpdateForm.value.owner_id,
         first_name: null,
         last_name: null,
         occupation: null,
